@@ -45,18 +45,29 @@ public class ArtistController {
     }
 
     /**
-     *
+     * Liste des artistes contenant le nom recherché
      * @param name
      * @param model
-     * @return Liste des artistes avec le nom recherché
+     * @return
      */
-    @RequestMapping(method = RequestMethod.GET, value = "", params = "matricule")
+    @RequestMapping(method = RequestMethod.GET, value = "", params = "name")
     public String findArtistByName(@RequestParam("name") String name, final ModelMap model){
         List<Artist> artists = artistRepository.findByName(name);
         model.put("artists", artists);
-        return "listArtists";
+        Integer nbArtists = artists.size();
+        model.put("nbArtists", nbArtists);
+        return "listeArtists";
     }
 
+    /**
+     * Permet de récupérer la liste de tous les artistes de manière paginée et triée (par défaut, par ordre ascendant)
+     * @param model
+     * @param page
+     * @param size
+     * @param sortDirection
+     * @param sortProperty
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET, value = "")
     public String listArtists(final ModelMap model,
                                @RequestParam(defaultValue = "0") Integer page,
@@ -70,6 +81,6 @@ public class ArtistController {
         model.put("pageNumber", page + 1);
         model.put("previousPage", page - 1);
         model.put("nextPage", page + 1);
-        return "listArtists";
+        return "listeArtists";
     }
 }
