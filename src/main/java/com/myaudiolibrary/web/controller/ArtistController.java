@@ -69,7 +69,7 @@ public class ArtistController {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET, value = "")
-    public String listArtists(final ModelMap model,
+    public String listeArtists(final ModelMap model,
                                @RequestParam(defaultValue = "0") Integer page,
                                @RequestParam(defaultValue = "10") Integer size,
                                @RequestParam(defaultValue = "ASC") String sortDirection,
@@ -81,6 +81,8 @@ public class ArtistController {
         model.put("pageNumber", page + 1);
         model.put("previousPage", page - 1);
         model.put("nextPage", page + 1);
+        model.put("start", page * size + 1);
+        model.put("end", (page) * size + pageArtists.getNumberOfElements());
         return "listeArtists";
     }
 }
