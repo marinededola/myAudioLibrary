@@ -39,42 +39,44 @@
 
     <div class="container">
         <h2>Détail de l'artiste [[${artist.name}]] </h2>
+        <form id="saveForm" th:action="'/artists/' + ${artist.id}" method="post" class="row">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <input type="hidden" th:value="${artist.id}" name="id">
+                        <label for="name" class="form-control-label">Nom</label>
+                        <input  name="name" type="text" id="name" th:value="${artist.name}" class="ember-text-field form-control ember-view">
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <label for="name" class="form-control-label">Nom</label>
-                    <input type="text" id="name" th:value="${artist.name}" class="ember-text-field form-control ember-view">
 
-
-                    <label for="performance" class="form-control-label">Albums</label>
-                    <div class="row">
-                        <div class="col-lg-10">
-                            <div class="list-group" th:each="album : ${artist.albums}">
-                                <li class="list-group-item">[[${album.title}]]</li>
+                        <label for="performance" class="form-control-label">Albums</label>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <div class="list-group" th:each="album : ${artist.albums}">
+                                    <li class="list-group-item">[[${album.title}]]</li>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 text-center">
+                                <div class="list-group text-center">
+                                    <button class="btn-danger list-group-item list-group-item-action"><span class="glyphicon glyphicon-remove"></span></button>
+                                    <button class="btn-danger list-group-item list-group-item-action"><span class="glyphicon glyphicon-remove"></span></button>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-2 text-center">
-                            <div class="list-group text-center">
-                                <button class="btn-danger list-group-item list-group-item-action"><span class="glyphicon glyphicon-remove"></span></button>
-                                <button class="btn-danger list-group-item list-group-item-action"><span class="glyphicon glyphicon-remove"></span></button>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <input type="text" placeholder="Ajouter un album..." class="form-control ember-text-field ember-view">
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-10">
-                            <input type="text" placeholder="Ajouter un album..." class="form-control ember-text-field ember-view">
-                        </div>
-                        <div class="col-lg-2 text-center">
-                            <button class="btn-success list-group-item list-group-item-action"><span class="glyphicon glyphicon-plus"></span></button>
+                            <div class="col-lg-2 text-center">
+                                <button class="btn-success list-group-item list-group-item-action"><span class="glyphicon glyphicon-plus"></span></button>
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
         <div class="row">
-            <button disabled="" class="btn btn-primary">Enregistrer</button>
+            <input form="saveForm" class="btn btn-primary" type="submit" value="Enregistrer">
             <button class="btn btn-danger">Supprimer</button>
         </div>
     </div>

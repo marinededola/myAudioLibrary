@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -45,14 +45,16 @@ public class ArtistController {
     }
 
     /**
-     * Liste des artistes contenant le nom recherché
-     * @param name
-     * @param model
-     * @return
+     * Liste des artistes contenant le nom recherche
+     *
      */
     @RequestMapping(method = RequestMethod.GET, value = "", params = "name")
-    public String findArtistByName(@RequestParam("name") String name, final ModelMap model){
+    public String findArtistByName(final ModelMap model,
+                                   @RequestParam(defaultValue = "name") String name){
         List<Artist> artists = artistRepository.findByName(name);
+        Boolean all = false;
+        model.put("all", all);
+
         model.put("artists", artists);
         Integer nbArtists = artists.size();
         model.put("nbArtists", nbArtists);
@@ -77,12 +79,38 @@ public class ArtistController {
         PageRequest pageRequest = PageRequest.of(page, size,
                 Sort.Direction.fromString(sortDirection), sortProperty);
         Page<Artist> pageArtists = artistRepository.findAll(pageRequest);
+        long nbArtists = pageArtists.getTotalElements();
+        Boolean all = true;
+        model.put("all", all);
         model.put("artists", pageArtists);
+        model.put("nbArtists", nbArtists);
         model.put("pageNumber", page + 1);
         model.put("previousPage", page - 1);
         model.put("nextPage", page + 1);
         model.put("start", page * size + 1);
         model.put("end", (page) * size + pageArtists.getNumberOfElements());
         return "listeArtists";
+    }
+
+    /**
+     * Ouverture de la page de détails pour la création de l'artiste
+     * @param model
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/new/artist")
+    public String newArtist(final ModelMap model){
+        model.put("artist", new Artist());
+        return "detailArtist";
+    }
+
+    /**
+     * Enregistrement des informations de création ou modification d'un artiste
+     * @param artist
+     * @return
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public RedirectView createOrSaveArtist(Artist artist){
+        artist = artistRepository.save(artist);
+        return new RedirectView("/artists/" + artist.getId());
     }
 }
