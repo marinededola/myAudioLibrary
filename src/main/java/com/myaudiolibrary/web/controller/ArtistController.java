@@ -114,6 +114,11 @@ public class ArtistController {
         return new RedirectView("/artists/" + artist.getId());
     }
 
+    /**
+     * Suppression d'un artiste via son id
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public RedirectView deleteArtist(@PathVariable Integer id){
         if(!artistRepository.existsById(id)){
