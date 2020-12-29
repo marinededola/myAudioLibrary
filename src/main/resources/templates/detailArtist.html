@@ -77,7 +77,7 @@
         </form>
         <div class="row">
             <input form="saveForm" class="btn btn-primary" type="submit" value="Enregistrer">
-            <button class="btn btn-danger">Supprimer</button>
+            <a th:href="'/artists/'+ ${artist.id} +'/delete'" class="btn btn-danger" >Supprimer</a>
         </div>
     </div>
 </div>

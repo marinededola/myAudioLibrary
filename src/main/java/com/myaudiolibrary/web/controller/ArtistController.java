@@ -113,4 +113,13 @@ public class ArtistController {
         artist = artistRepository.save(artist);
         return new RedirectView("/artists/" + artist.getId());
     }
+
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
+    public RedirectView deleteArtist(@PathVariable Integer id){
+        if(!artistRepository.existsById(id)){
+            throw new EntityNotFoundException("L'artiste avec l'identifiant " + id + " n'a pas été trouvé");
+        }
+        artistRepository.deleteById(id);
+        return new RedirectView("/artists?page=0&size=10&sortProperty=name&sortDirection=ASC");
+    }
 }
