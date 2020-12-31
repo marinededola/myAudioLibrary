@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class IndexController {
 
-    //Appel template accueil
+    /**
+     * Accueil Librairie audio
+     * @param model
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET, value = "")
     public String index(final ModelMap model){
         return "accueil";

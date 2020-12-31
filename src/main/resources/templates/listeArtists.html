@@ -18,17 +18,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/" class="navbar-brand">Librairie Audio</a>
+            <a href="/">Librairie Audio</a>
         </div>
 
         <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/artists?page=0&size=10&sortProperty=name&sortDirection=ASC" class="nav-link">Liste des artistes</a></li>
+                <li class="active"><a href="/artists?page=0&amp;size=10&amp;sortDirection=ASC&amp;sortProperty=name" class="nav-link ember-view">Liste des artistes</a></li>
             </ul>
 
-            <form role="search" class="navbar-form navbar-right">
+            <form role="search" class="navbar-form navbar-right" action="/artists" method="get">
                 <div class="form-group">
-                    <input type="text" placeholder="Rechercher par nom" class=" form-control">
+                    <input type="text" name="name" placeholder="Rechercher par nom" class="ember-text-field form-control ember-view">
                 </div>
                 <button type="submit" class="btn btn-default">Rechercher</button>
             </form>

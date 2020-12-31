@@ -17,10 +17,4 @@ public interface ArtistRepository extends JpaRepository<Artist, Integer> {
     @Query("SELECT a FROM #{#entityName} a WHERE a.name LIKE %:name%")
     List<Artist> findByName(@Param("name")String name);
 
-    /**
-     * Booléen qui détermine l'existence, ou nom, d'un artiste possèdant un nom identique à celui rentré en paramètre
-     * @param name
-     * @return
-     */
-    boolean existsByName(String name);
 }
